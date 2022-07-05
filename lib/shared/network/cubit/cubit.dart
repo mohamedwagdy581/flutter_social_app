@@ -1,6 +1,9 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:maintenance/models/user_model.dart';
 import 'package:maintenance/modules/chats/chat_screen.dart';
 import 'package:maintenance/modules/feeds/feeds_screen.dart';
@@ -62,6 +65,24 @@ class AppCubit extends Cubit<AppStates> {
     } else {
       currentIndex = index;
       emit(AppChangeBottomNavigationBarState());
+    }
+  }
+
+  File? profileImage;
+  final ImagePicker picker = ImagePicker();
+
+  Future getProfileImage() async
+  {
+    final XFile? pickedFile = await picker.pickImage(source: ImageSource.gallery,);
+
+    if(pickedFile != null)
+    {
+      profileImage = File(pickedFile.path);
+      emit(AppProfileImagePickedSuccessState());
+    }else
+    {
+      print('No Image Selected!');
+      emit(AppProfileImagePickedErrorState());
     }
   }
 

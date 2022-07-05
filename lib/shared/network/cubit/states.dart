@@ -22,6 +22,16 @@ class AppChangeBottomNavigationBarState extends AppStates {}
 // New Post State
 class AppNewPostState extends AppStates {}
 
+// Profile Image Picked States
+class AppProfileImagePickedSuccessState extends AppStates {}
+
+class AppProfileImagePickedErrorState extends AppStates {}
+
+// Cover Image Picked States
+class AppCoverImagePickedSuccessState extends AppStates {}
+
+class AppCoverImagePickedErrorState extends AppStates {}
+
 
 // Create Post States
 class AppCreatePostLoadingState extends AppStates {}

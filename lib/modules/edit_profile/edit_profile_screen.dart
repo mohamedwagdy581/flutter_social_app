@@ -1,3 +1,4 @@
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:maintenance/shared/components/components.dart';
@@ -14,12 +15,18 @@ class EditProfileScreen extends StatelessWidget
   var nameController = TextEditingController();
   var bioController = TextEditingController();
 
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AppCubit, AppStates>(
-      listener: (BuildContext context, AppStates state) {},
+      listener: (BuildContext context, AppStates state)
+      {
+
+      },
       builder: (BuildContext context, AppStates state) {
+
         var userModel = AppCubit.get(context).userModel;
+        //var profileImage = AppCubit.get(context).profileImage;
 
         return Scaffold(
           appBar: AppBar(
@@ -85,14 +92,16 @@ class EditProfileScreen extends StatelessWidget
                             radius: 64.0,
                             backgroundColor:
                                 Theme.of(context).scaffoldBackgroundColor,
-                            child: const CircleAvatar(
+                            child: CircleAvatar(
                               radius: 60.0,
-                              backgroundImage: NetworkImage(
-                                  'https://img.freepik.com/free-photo/wow-sale-there-amazed-redhead-girl-pointing-left-being-impressed-by-sale-announcement-showing-logo-standing-tshirt-against-white-background_176420-49239.jpg?t=st=1656577210~exp=1656577810~hmac=cc1cccdcd74eead3c597ae7f55984de886bf8c710457355ac173fc0a9ca3c542&w=1380'),
+                              backgroundImage: NetworkImage('${userModel!.image}'),
                             ),
                           ),
                           IconButton(
-                            onPressed: () {},
+                            onPressed: ()
+                            {
+                              AppCubit.get(context).getProfileImage();
+                            },
                             icon: const CircleAvatar(
                               radius: 20.0,
                               child: Icon(
