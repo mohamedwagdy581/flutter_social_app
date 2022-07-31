@@ -29,9 +29,11 @@ class RegisterCubit extends Cubit<RegisterStates>
     ).then((value)
     {
 
+      var user = FirebaseAuth.instance.currentUser;
+      user?.updateDisplayName(name);
       createUser(
-          name: name.toString(),
-          email: email.toString(),
+          name: user!.displayName.toString(),
+          email: value.user!.email.toString(),
           phone: phone.toString(),
           uId: value.user!.uid.toString(),
           image: image.toString(),

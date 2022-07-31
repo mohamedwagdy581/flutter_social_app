@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:maintenance/models/user_model.dart';
@@ -11,6 +12,7 @@ import 'package:maintenance/modules/settings/settings_screen.dart';
 import 'package:maintenance/modules/users/users_screen.dart';
 import 'package:maintenance/shared/components/constants.dart';
 import 'package:maintenance/shared/network/cubit/states.dart';
+import 'package:maintenance/shared/network/local/cash_helper.dart';
 
 class AppCubit extends Cubit<AppStates> {
   AppCubit() : super(AppInitialState());
@@ -68,22 +70,69 @@ class AppCubit extends Cubit<AppStates> {
     }
   }
 
+
   File? profileImage;
-  final ImagePicker picker = ImagePicker();
 
-  Future getProfileImage() async
+  Future pickProfileImage() async
   {
-    final XFile? pickedFile = await picker.pickImage(source: ImageSource.gallery,);
-
-    if(pickedFile != null)
+    try{
+      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if(image == null) {
+        print('No Image Selected!');
+        emit(AppProfileImagePickedErrorState());
+        return;
+      }else
+      {
+        final imageTemporary = File(image.path);
+        profileImage = imageTemporary;
+        emit(AppProfileImagePickedSuccessState());
+      }
+    } on PlatformException catch (error)
     {
-      profileImage = File(pickedFile.path);
-      emit(AppProfileImagePickedSuccessState());
+      print('Failed to pick image ${error.toString()}');
+    }
+
+  }
+
+  File? coverImage;
+  Future pickCoverImage() async
+  {
+    try{
+      final image = await ImagePicker().pickImage(source: ImageSource.gallery);
+      if(image == null) {
+        print('No Image Selected!');
+        emit(AppCoverImagePickedErrorState());
+        return;
+      }else
+      {
+        final imageTemporary = File(image.path);
+        coverImage = imageTemporary;
+        emit(AppCoverImagePickedSuccessState());
+      }
+    } on PlatformException catch (error)
+    {
+      print('Failed to pick image ${error.toString()}');
+    }
+
+  }
+
+  // Function to Change Theme mode
+  bool isDark = false;
+  void changeAppModeTheme({bool? fromShared})
+  {
+    if(fromShared != null)
+    {
+      isDark = fromShared;
+      emit(AppChangeModeThemeState());
     }else
     {
-      print('No Image Selected!');
-      emit(AppProfileImagePickedErrorState());
+      isDark = !isDark;
+        CashHelper.setBoolean(key: 'isDark', value: isDark).then((value)
+      {
+        emit(AppChangeModeThemeState());
+      });
     }
   }
+
 
 }

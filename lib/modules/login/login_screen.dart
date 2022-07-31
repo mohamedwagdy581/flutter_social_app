@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../layout/home_layout.dart';
 import '../../shared/components/components.dart';
-import '../../shared/network/local/cach_helper.dart';
+import '../../shared/network/local/cash_helper.dart';
 import '../register/register_screen.dart';
 import 'login_cubit/login_cubit.dart';
 import 'login_cubit/login_states.dart';
@@ -34,7 +34,7 @@ class LoginScreen extends StatelessWidget {
           if(state is LoginSuccessState)
           {
             // CacheHelper to save token or Authorization and navigate and finish to the main home screen
-            CacheHelper.saveData(
+            CashHelper.saveData(
               key: 'uId',
               value: state.uId,
             ).then((value) {

@@ -5,7 +5,7 @@ import 'package:maintenance/layout/home_layout.dart';
 import 'package:maintenance/shared/components/constants.dart';
 import 'package:maintenance/shared/network/cubit/cubit.dart';
 import 'package:maintenance/shared/network/cubit/states.dart';
-import 'package:maintenance/shared/network/local/cach_helper.dart';
+import 'package:maintenance/shared/network/local/cash_helper.dart';
 import 'package:maintenance/shared/network/remote/dio_helper.dart';
 import 'package:maintenance/shared/style/themes.dart';
 import 'package:maintenance/splash_screen.dart';
@@ -14,10 +14,10 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   DioHelper.init();
-  await CacheHelper.intit();
+  await CashHelper.init();
 
   Widget widget;
-  uId = CacheHelper.getData(key: 'uId');
+  uId = CashHelper.getData(key: 'uId');
 
   if(uId != null)
   {

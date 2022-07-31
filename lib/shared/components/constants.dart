@@ -1,9 +1,9 @@
 import '../../modules/login/login_screen.dart';
-import '../network/local/cach_helper.dart';
+import '../network/local/cash_helper.dart';
 import 'components.dart';
 
 void signOut(context) {
-  CacheHelper.removeData(key: 'uId').then((value)
+  CashHelper.removeData(key: 'uId').then((value)
   {
     if (value) {
       navigateAndFinish(context, LoginScreen());

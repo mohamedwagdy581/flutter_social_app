@@ -56,14 +56,16 @@ Widget defaultTextFormField({
 Widget defaultButton({
   required VoidCallback onPressed,
   required String text,
+  Color? backgroundColor,
 }) =>
     Container(
-      height: 40.0,
+      height: 50.0,
       width: double.infinity,
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5.0), color: Colors.blue,
       ),
       child: MaterialButton(
+        color: backgroundColor,
         onPressed: onPressed,
         child: Text(
           text,
